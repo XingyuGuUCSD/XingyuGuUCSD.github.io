@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="src/app.css" rel="stylesheet">
+        <script src="https://unpkg.com/vue"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <title>toDoList</title>
+    </head>
+    <body>
+        <div id="app">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Todo Application
+                            </div>
+                            <form class="card-block m-0" @submit.prevent="add">
+                                <div class="input-group m-0">
+                                    <input class="form-control" type="text" placeholder="add todo" v-model="todo">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit" :disabled="!todo">Add</button>
+                                    </span>
+                                </div>
+                            </form>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-block" v-for="ele in todos">
+                                    <div class="d-flex justify-content-end" v-if="!ele.isEdited">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" v-model="ele.finished">
+                                            <span :class={'todo-finished':ele.finished}>{{ele.content}}</span>
+                                        </label>
+                                        <div class="ml-auto btn-group">
+                                            <button class="btn btn-sm btn-primary"
+                                                    @click="edit(ele)"
+                                                    v-if="!isBeingEdited"
+                                            >
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger"
+                                                    @click="remove(ele)"
+                                            >
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <form v-if="ele.isEdited" class="m-0" @submit.prevent="update(ele)">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Edit"
+                                                   v-model="editTodo"
+                                            >
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-sm btn-primary"
+                                                        type="submit"
+                                                        :disabled="!editTodoIsValid"
+                                                >
+                                                    <i class="fa fa-save"></i>
+                                                </button>
+                                            </span>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-sm btn-danger"
+                                                        @click="remove(ele)"
+                                                >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="src/app.js"></script>
+    </body>
+</html>
